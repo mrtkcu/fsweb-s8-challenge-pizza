@@ -13,10 +13,11 @@
 
 .logo {
   background-image: url("../components/logo.svg");
-  background-size: contain; /* Ensures the logo fits its container */
-  background-repeat: no-repeat; /* Prevents tiling */
-  width: 32rem;
-  height: 10rem;
+  background-size: contain; /* Ensures the logo fits its container without losing quality */
+  background-repeat: no-repeat;
+  width: 100%; /* Makes the width responsive */
+  max-width: 32rem; /* Prevents it from becoming too large */
+  height: 20rem; /* Ensures the aspect ratio is maintained */
   margin: 0.5rem auto;
 }
 

@@ -1,0 +1,16 @@
+.congrats {
+  min-height: 85vh;
+  flex: 1; /* Makes the section take up all remaining space */
+  display: flex; /* Optional: Centers content within the section */
+  flex-direction: column;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  /* Aligns text to center */
+  padding-bottom: 10rem; /* Adds some spacing */
+  font-size: 5rem;
+  font-family: "Roboto Condensed";
+  background-color: #ce2829;
+  color: white;
+  gap: 1rem;
+  font-weight: 300;
+}

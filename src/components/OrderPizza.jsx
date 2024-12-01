@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../styles/OrderPizza.css";
+import { useHistory } from "react-router-dom";
 
 function OrderPizza() {
   const [size, setSize] = useState("");
@@ -14,6 +15,15 @@ function OrderPizza() {
   const extraCost = ingredients.length * 5;
   const totalPrice = (basePrice + extraCost) * quantity;
 
+  let history = useHistory();
+
+  const isFormValid =
+    size &&
+    dough &&
+    name.length >= 3 &&
+    ingredients.length >= 4 &&
+    ingredients.length <= 10;
+
   const handleIngredientChange = (ingredient) => {
     setIngredients(
       (prev) =>
@@ -25,8 +35,9 @@ function OrderPizza() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!size || !dough || !name) {
-      alert("Lütfen zorunlu alanları doldurun!");
+
+    if (!isFormValid) {
+      alert("Lütfen tüm gerekli alanları doğru şekilde doldurun!");
       return;
     }
 
@@ -43,7 +54,7 @@ function OrderPizza() {
     try {
       const response = await axios.post("https://reqres.in/api/pizza", payload);
       console.log("Sipariş Başarılı:", response.data);
-      alert("Siparişiniz başarıyla gönderildi!");
+      history.push("/success");
     } catch (error) {
       console.error("Sipariş Hatası:", error);
       alert("Sipariş gönderilirken bir hata oluştu.");
@@ -67,6 +78,22 @@ function OrderPizza() {
         </p>
       </header>
       <form className="pizza-form" onSubmit={handleSubmit}>
+        <section className="name-input-section">
+          <h3>
+            <label htmlFor="name">
+              İsim <span className="required">*</span>
+            </label>
+          </h3>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Adınızı Giriniz..."
+            required
+            minLength={3}
+          />
+        </section>
         <section className="pizza-size-and-dough-section">
           <div className="size-container">
             <h3>
@@ -113,6 +140,7 @@ function OrderPizza() {
               name="dough"
               id="choose-dough"
               onChange={(e) => setDough(e.target.value)}
+              required
             >
               <option value="">Hamur Kalinligi</option>
               <option value="thin">Ince</option>
@@ -123,7 +151,7 @@ function OrderPizza() {
         </section>
         <section className="ingredients-section">
           <h3>Ek Malzemeler</h3>
-          <p>En fazla 10 malzeme seçebilirsiniz. 5₺</p>
+          <p>En az 4, en fazla 10 malzeme seçebilirsiniz. 5₺</p>
           <div className="checkbox-container">
             {[
               "Pepperoni",
@@ -147,23 +175,15 @@ function OrderPizza() {
                   value={ingredient}
                   id={ingredient}
                   onChange={() => handleIngredientChange(ingredient)}
+                  disabled={
+                    ingredients.length >= 10 &&
+                    !ingredients.includes(ingredient)
+                  }
                 />
                 <label htmlFor={ingredient}>{ingredient}</label>
               </div>
             ))}
           </div>
-        </section>
-        <section className="name-input-section">
-          <h3>
-            <label htmlFor="name">İsim </label>
-          </h3>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Adınızı Giriniz..."
-          />
         </section>
         <section className="order-note-section">
           <h3>
@@ -203,7 +223,9 @@ function OrderPizza() {
             <p className="red bold">
               <span>Toplam</span> <span>{totalPrice}₺</span>
             </p>
-            <button type="submit">SİPARİŞ VER</button>
+            <button type="submit" disabled={!isFormValid}>
+              SİPARİŞ VER
+            </button>
           </div>
         </section>
       </form>
