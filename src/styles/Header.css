@@ -1,0 +1,42 @@
+.header {
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 300;
+  color: #faf7f2;
+  background-color: #ce2829;
+  font-size: 1.5rem;
+  height: 10.5rem;
+  padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.logo {
+  background-image: url("../components/logo.svg");
+  background-size: contain; /* Ensures the logo fits its container */
+  background-repeat: no-repeat; /* Prevents tiling */
+  width: 32rem;
+  height: 10rem;
+  margin: 0.5rem auto;
+}
+
+h1 {
+  padding-top: 0.5rem;
+  text-align: center;
+}
+nav {
+  width: 33%;
+  margin: 0 auto;
+  margin-bottom: 0.5rem;
+}
+
+a {
+  text-decoration: none;
+  color: #faf7f2;
+  font-size: 1.2rem;
+}
+
+a:last-child {
+  color: #faf7f2;
+  font-weight: bold;
+}
