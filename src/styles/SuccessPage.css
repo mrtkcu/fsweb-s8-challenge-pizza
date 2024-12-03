@@ -1,5 +1,5 @@
 .congrats {
-  min-height: 85vh;
+  min-height: 65vh;
   flex: 1; /* Makes the section take up all remaining space */
   display: flex; /* Optional: Centers content within the section */
   flex-direction: column;

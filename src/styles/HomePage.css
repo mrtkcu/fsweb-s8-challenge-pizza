@@ -1,3 +1,15 @@
+* {
+  font-family: "Roboto Condensed";
+}
+
+.red {
+  color: #ce2829;
+}
+
+.black {
+  color: #1d1c1c;
+}
+
 .image-container {
   position: relative;
   width: 100%;
@@ -5,22 +17,21 @@
   background-image: url("../../Assets/Iteration-1-assets/home-banner.png");
   background-size: cover; /* Make sure the image covers the container */
   background-position: 50% 100%; /* Focus on the top part of the image */
+  margin-bottom: 2rem;
+}
+
+.campaign-p {
+  color: #fdc913;
+  font-family: "Satisfy";
+  font-size: 3.5rem;
 }
 
 .welcome {
-  position: absolute;
-  top: 20%; /* Adjust vertical position */
-  left: 50%; /* Center horizontally */
-  transform: translate(-50%, -50%); /* Center the content exactly */
   color: white; /* Text color for visibility */
   text-align: center;
   font-size: 6rem;
   font-family: "Roboto Condensed";
   font-weight: 200;
-}
-
-.welcome p {
-  margin: 10px 0;
 }
 
 .welcome button {
@@ -30,10 +41,193 @@
   border: none;
   cursor: pointer;
   border-radius: 10rem;
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 1.5rem;
+  font-family: "Roboto Condensed";
+  letter-spacing: 0.2rem;
 }
 
 .welcome button:hover {
   background-color: #e0be41; /* Darker color on hover */
+}
+
+/* CONTENT CONTAINER AFTER BIG IMAGE- -  NAVBAR*/
+.content-container {
+  width: 80%;
+  margin: 0 auto;
+}
+.navbar {
+  margin-bottom: 12rem;
+}
+
+.navbar ul {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+.nav-item-group a {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  font-size: 1.3rem;
+  color: #1d1c1c;
+  padding: 1rem 2rem;
+}
+
+.nav-item-group a:hover {
+  background-color: #1d1c1c;
+  color: white;
+  border-radius: 40px;
+}
+/* BANNER  CARDS */
+.banner {
+  display: flex;
+  width: 100%;
+  gap: 20px; /* Adds spacing between left and right sides */
+  margin-bottom: 5rem;
+}
+
+.left-container {
+  flex: 1; /* Occupies more space */
+  position: relative;
+}
+
+.kart-1 {
+  width: 100%;
+  height: auto;
+  border-radius: 2rem; /* Makes the image responsive */
+}
+
+.overlay-container {
+  position: relative;
+}
+
+.overlay-content {
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  transform: translateY(-50%);
+  color: white;
+  text-align: left;
+}
+
+.overlay-content h3 {
+  font-size: 5rem;
+  margin: 0;
+  font-family: "Quattrocento";
+}
+
+.overlay-content p {
+  font-size: 1.5rem;
+  margin: 1rem 0rem;
+  font-weight: 600;
+}
+
+.cta-button {
+  padding: 20px 40px;
+  background-color: white;
+  color: #ce2829;
+  border: none;
+  border-radius: 40px;
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #e0be41;
+}
+
+.right-container {
+  flex: 1; /* Occupies less space */
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.kart {
+  position: relative;
+}
+
+.kart img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 40px;
+}
+
+.kart-content {
+  position: absolute;
+  top: 50%;
+  left: 22%;
+  transform: translate(-50%, -50%);
+  text-align: left;
+  color: white;
+}
+
+.kart-2 .kart-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.kart-3 .kart-content p {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+/* MENU */
+.menu-heading-p {
+  text-align: center;
+  font-size: 1.5rem;
+  font-family: "Satisfy";
+  margin-bottom: 1rem;
+}
+
+.menu-heading-h1 {
+  text-align: center;
+  letter-spacing: 0.1rem;
+  font-size: 2.3rem;
+  font-family: "Roboto Condensed";
+  font-weight: 400;
+  color: rgb(20, 20, 20);
+  margin-bottom: 4rem;
+}
+
+.foods {
+  display: flex;
+  gap: 10rem;
+  margin-top: -5rem;
+  margin-bottom: 12rem;
+}
+
+.food img {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.food {
+  flex: 1;
+}
+
+.food-heading {
+  margin-top: 1rem;
+  font-size: 1.7rem;
+  letter-spacing: 0.1rem;
+  font-weight: 500;
+}
+
+.food-details {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+.food-price {
+  font-weight: 500;
+  font-size: 1.3rem;
 }

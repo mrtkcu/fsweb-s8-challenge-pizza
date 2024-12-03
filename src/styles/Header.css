@@ -9,6 +9,8 @@
   display: flex;
   flex-direction: column;
   gap: 3.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .logo {
@@ -19,25 +21,4 @@
   max-width: 32rem; /* Prevents it from becoming too large */
   height: 20rem; /* Ensures the aspect ratio is maintained */
   margin: 0.5rem auto;
-}
-
-h1 {
-  padding-top: 0.5rem;
-  text-align: center;
-}
-nav {
-  width: 33%;
-  margin: 0 auto;
-  margin-bottom: 0.5rem;
-}
-
-a {
-  text-decoration: none;
-  color: #faf7f2;
-  font-size: 1.2rem;
-}
-
-a:last-child {
-  color: #faf7f2;
-  font-weight: bold;
 }

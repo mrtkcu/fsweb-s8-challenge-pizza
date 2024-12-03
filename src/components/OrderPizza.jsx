@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../styles/OrderPizza.css";
 import { useHistory } from "react-router-dom";
+import formBanner from "../assets/form-banner.png";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function OrderPizza() {
   const [size, setSize] = useState("");
@@ -10,6 +12,7 @@ function OrderPizza() {
   const [quantity, setQuantity] = useState(1);
   const [name, setName] = useState("");
   const [note, setNote] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const basePrice = 85.5;
   const extraCost = ingredients.length * 5;
@@ -25,11 +28,10 @@ function OrderPizza() {
     ingredients.length <= 10;
 
   const handleIngredientChange = (ingredient) => {
-    setIngredients(
-      (prev) =>
-        prev.includes(ingredient)
-          ? prev.filter((item) => item !== ingredient) // Remove ingredient
-          : [...prev, ingredient] // Add ingredient
+    setIngredients((prev) =>
+      prev.includes(ingredient)
+        ? prev.filter((item) => item !== ingredient)
+        : [...prev, ingredient]
     );
   };
 
@@ -37,7 +39,7 @@ function OrderPizza() {
     event.preventDefault();
 
     if (!isFormValid) {
-      alert("Lütfen tüm gerekli alanları doğru şekilde doldurun!");
+      setErrorMessage("Lütfen tüm gerekli alanları doğru şekilde doldurun!");
       return;
     }
 
@@ -57,14 +59,30 @@ function OrderPizza() {
       history.push("/success");
     } catch (error) {
       console.error("Sipariş Hatası:", error);
-      alert("Sipariş gönderilirken bir hata oluştu.");
+      alert("Ağ Hatası");
     }
   };
 
   return (
     <main className="order-pizza">
       <header className="pizza-header">
-        <h2>Position Absolute Acı Pizza</h2>
+        <div className="form-banner">
+          <img src={formBanner} alt="Form Banner" />
+        </div>
+        <div className="navlink-container">
+          <nav>
+            <Link to="/" className="nav-link">
+              Anasayfa -
+            </Link>
+            <Link to="/secenekler" className="nav-link">
+              Seçenekler -
+            </Link>
+            <Link to="/orderpizza" className="nav-link">
+              Sipariş Oluştur
+            </Link>
+          </nav>
+        </div>
+        <h2 id="pizza-header-title">Position Absolute Acı Pizza</h2>
         <div className="pizza-price-stars-code-container">
           <div className="price-tag">85.50₺</div>
           <div className="stars-code">
@@ -72,18 +90,121 @@ function OrderPizza() {
             <div className="pizza-code">(200)</div>
           </div>
         </div>
-        <p>
+        <p id="pizza-description">
           Frontend Dev olarak hala position:absolute kullanıyorsan bu çok acı
           pizza tam sana göre.
         </p>
       </header>
-      <form className="pizza-form" onSubmit={handleSubmit}>
+      <form
+        className="pizza-form"
+        onSubmit={handleSubmit}
+        aria-labelledby="pizza-header-title"
+        aria-describedby="pizza-description"
+      >
+        {errorMessage && (
+          <div className="error-message" role="alert">
+            {errorMessage}
+          </div>
+        )}
+        <section className="pizza-size-and-dough-section">
+          <fieldset className="radio-container">
+            <legend>
+              Boyut Seç <span className="required">*</span>
+            </legend>
+            <div className="radio-group-container">
+              <div className="radio-align">
+                <input
+                  type="radio"
+                  name="pizza-size"
+                  id="small"
+                  value="Küçük"
+                  onChange={(e) => setSize(e.target.value)}
+                />
+                <label htmlFor="small">S</label>
+              </div>
+              <div className="radio-align">
+                <input
+                  type="radio"
+                  name="pizza-size"
+                  id="medium"
+                  value="Orta"
+                  onChange={(e) => setSize(e.target.value)}
+                />
+                <label htmlFor="medium">M</label>
+              </div>
+              <div className="radio-align">
+                <input
+                  type="radio"
+                  name="pizza-size"
+                  id="large"
+                  value="Büyük"
+                  onChange={(e) => setSize(e.target.value)}
+                />
+                <label htmlFor="large">L</label>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>
+              Hamur Seç <span className="required">*</span>
+            </legend>
+            <select
+              name="dough"
+              id="choose-dough"
+              onChange={(e) => setDough(e.target.value)}
+              required
+              aria-required="true"
+            >
+              <option value="">&mdash; Hamur Kalinligi Seç &mdash;</option>
+              <option value="thin">Ince</option>
+              <option value="medium">Orta</option>
+              <option value="thick">Kalin</option>
+            </select>
+          </fieldset>
+        </section>
+        <section className="ingredients-section">
+          <fieldset>
+            <legend>
+              Ek Malzemeler (En az 4, en fazla 10 malzeme seçebilirsiniz.)
+            </legend>
+            <div className="checkbox-container">
+              {[
+                "Pepperoni",
+                "Domates",
+                "Biber",
+                "Sosis",
+                "Misir",
+                "Sucuk",
+                "Kanada Jambonu",
+                "Zeytin",
+                "Ananas",
+                "Tavuk Izgara",
+                "Jalepeno",
+                "Kabak",
+                "Soğan",
+                "Sarımsak",
+              ].map((ingredient) => (
+                <div key={ingredient}>
+                  <input
+                    type="checkbox"
+                    value={ingredient}
+                    id={ingredient}
+                    onChange={() => handleIngredientChange(ingredient)}
+                    disabled={
+                      ingredients.length >= 10 &&
+                      !ingredients.includes(ingredient)
+                    }
+                  />
+                  <label htmlFor={ingredient}>{ingredient}</label>
+                </div>
+              ))}
+            </div>
+          </fieldset>
+        </section>
         <section className="name-input-section">
-          <h3>
-            <label htmlFor="name">
-              İsim <span className="required">*</span>
-            </label>
-          </h3>
+          <label htmlFor="name">
+            İsim <span className="required">*</span>
+          </label>
           <input
             type="text"
             id="name"
@@ -94,101 +215,8 @@ function OrderPizza() {
             minLength={3}
           />
         </section>
-        <section className="pizza-size-and-dough-section">
-          <div className="size-container">
-            <h3>
-              Boyut Seç <span className="required">*</span>
-            </h3>
-            <div className="radio-align">
-              <input
-                type="radio"
-                name="pizza-size"
-                id="small"
-                value="Küçük"
-                onChange={(e) => setSize(e.target.value)}
-              />
-              <label htmlFor="small">Küçük</label>
-            </div>
-            <div className="radio-align">
-              <input
-                type="radio"
-                name="pizza-size"
-                id="medium"
-                value="Orta"
-                onChange={(e) => setSize(e.target.value)}
-              />
-              <label htmlFor="medium">Orta</label>
-            </div>
-            <div className="radio-align">
-              <input
-                type="radio"
-                name="pizza-size"
-                id="large"
-                value="Büyük"
-                onChange={(e) => setSize(e.target.value)}
-              />
-              <label htmlFor="large">Büyük</label>
-            </div>
-          </div>
-          <div className="dough-container">
-            <h3>
-              <label htmlFor="choose-dough">
-                Hamur Seç <span className="required">*</span>
-              </label>
-            </h3>
-            <select
-              name="dough"
-              id="choose-dough"
-              onChange={(e) => setDough(e.target.value)}
-              required
-            >
-              <option value="">Hamur Kalinligi</option>
-              <option value="thin">Ince</option>
-              <option value="medium">Orta</option>
-              <option value="thick">Kalin</option>
-            </select>
-          </div>
-        </section>
-        <section className="ingredients-section">
-          <h3>Ek Malzemeler</h3>
-          <p>En az 4, en fazla 10 malzeme seçebilirsiniz. 5₺</p>
-          <div className="checkbox-container">
-            {[
-              "Pepperoni",
-              "Domates",
-              "Biber",
-              "Sosis",
-              "Misir",
-              "Sucuk",
-              "Kanada Jambonu",
-              "Zeytin",
-              "Ananas",
-              "Tavuk Izgara",
-              "Jalepeno",
-              "Kabak",
-              "Soğan",
-              "Sarımsak",
-            ].map((ingredient) => (
-              <div key={ingredient}>
-                <input
-                  type="checkbox"
-                  value={ingredient}
-                  id={ingredient}
-                  onChange={() => handleIngredientChange(ingredient)}
-                  disabled={
-                    ingredients.length >= 10 &&
-                    !ingredients.includes(ingredient)
-                  }
-                />
-                <label htmlFor={ingredient}>{ingredient}</label>
-              </div>
-            ))}
-          </div>
-        </section>
         <section className="order-note-section">
-          <h3>
-            <label htmlFor="order-note">Sipariş Notu</label>
-          </h3>
+          <label htmlFor="order-note">Sipariş Notu</label>
           <textarea
             className="order-note-input"
             id="order-note"
@@ -203,6 +231,7 @@ function OrderPizza() {
               type="button"
               className="add-subtract"
               onClick={() => setQuantity((prev) => Math.max(prev - 1, 1))}
+              aria-label="Azalt"
             >
               -
             </button>
@@ -211,6 +240,7 @@ function OrderPizza() {
               type="button"
               className="add-subtract"
               onClick={() => setQuantity((prev) => prev + 1)}
+              aria-label="Arttır"
             >
               +
             </button>
@@ -223,7 +253,11 @@ function OrderPizza() {
             <p className="red bold">
               <span>Toplam</span> <span>{totalPrice}₺</span>
             </p>
-            <button type="submit" disabled={!isFormValid}>
+            <button
+              type="submit"
+              disabled={!isFormValid}
+              aria-disabled={!isFormValid}
+            >
               SİPARİŞ VER
             </button>
           </div>

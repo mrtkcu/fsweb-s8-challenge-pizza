@@ -1,16 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import "../styles/Header.css";
 
-const Header = ({ showLinks }) => {
+const Header = () => {
   return (
     <header className="header">
       <div className="logo"></div>
-      {showLinks && (
-        <nav>
-          <a href="#anasayfa">Anasayfa -</a>
-          <a href="#sipariş-oluştur"> Sipariş Oluştur</a>
-        </nav>
-      )}
     </header>
   );
 };
