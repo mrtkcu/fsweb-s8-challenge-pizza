@@ -72,6 +72,7 @@
   font-size: 1.3rem;
   color: #1d1c1c;
   padding: 1rem 2rem;
+  text-decoration: none;
 }
 
 .nav-item-group a:hover {

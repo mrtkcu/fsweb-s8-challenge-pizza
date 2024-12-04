@@ -1,0 +1,90 @@
+/* FOOTER */
+.footer-container {
+  background-color: #1d1c1c;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  color: aliceblue;
+}
+
+.footer-left {
+  display: flex;
+  gap: 5rem;
+}
+
+.contact-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+}
+
+.contact h3 {
+  font-size: 3rem;
+  font-weight: 800;
+  font-family: "Roboto Condensed";
+}
+
+.hot-menus {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.hot-menus h5 {
+  margin-top: 3rem;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.hot-menus ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 1.1rem;
+}
+
+.hot-menus ul li a {
+  text-decoration: none;
+  color: antiquewhite;
+}
+
+.footer-right {
+  margin-top: 3rem;
+}
+
+.footer-right h3 {
+  font-size: 2rem;
+  font-weight: 400;
+  margin-bottom: 3rem;
+}
+
+.insta-imgs {
+  display: flex;
+  width: 20rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.copyright {
+  width: 80%;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.copyright p {
+  color: aliceblue;
+}
+
+hr {
+  border: 1px solid rgb(73, 73, 73);
+}

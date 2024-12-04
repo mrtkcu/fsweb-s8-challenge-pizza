@@ -22,3 +22,15 @@
   height: 20rem; /* Ensures the aspect ratio is maintained */
   margin: 0.5rem auto;
 }
+
+@media (max-width: 480px) {
+  .logo {
+    width: 75%;
+  }
+}
+
+@media (max-width: 725px) {
+  .logo {
+    width: 60%;
+  }
+}

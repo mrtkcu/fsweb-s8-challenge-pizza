@@ -56,7 +56,7 @@ function OrderPizza() {
     try {
       const response = await axios.post("https://reqres.in/api/pizza", payload);
       console.log("Sipariş Başarılı:", response.data);
-      history.push("/success");
+      history.push({ pathname: "/success", state: { payload } });
     } catch (error) {
       console.error("Sipariş Hatası:", error);
       alert("Ağ Hatası");
@@ -117,7 +117,7 @@ function OrderPizza() {
                   type="radio"
                   name="pizza-size"
                   id="small"
-                  value="Küçük"
+                  value="S"
                   onChange={(e) => setSize(e.target.value)}
                 />
                 <label htmlFor="small">S</label>
@@ -127,7 +127,7 @@ function OrderPizza() {
                   type="radio"
                   name="pizza-size"
                   id="medium"
-                  value="Orta"
+                  value="M"
                   onChange={(e) => setSize(e.target.value)}
                 />
                 <label htmlFor="medium">M</label>
@@ -137,7 +137,7 @@ function OrderPizza() {
                   type="radio"
                   name="pizza-size"
                   id="large"
-                  value="Büyük"
+                  value="L"
                   onChange={(e) => setSize(e.target.value)}
                 />
                 <label htmlFor="large">L</label>
@@ -156,9 +156,10 @@ function OrderPizza() {
               aria-required="true"
             >
               <option value="">&mdash; Hamur Kalinligi Seç &mdash;</option>
-              <option value="thin">Ince</option>
-              <option value="medium">Orta</option>
-              <option value="thick">Kalin</option>
+              <option value="Süpper İnce">Süpper İnce</option>
+              <option value="İnce">İnce</option>
+              <option value="Orta">Orta</option>
+              <option value="Kalın">Kalin</option>
             </select>
           </fieldset>
         </section>
