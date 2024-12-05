@@ -232,3 +232,77 @@
   font-weight: 500;
   font-size: 1.3rem;
 }
+
+@media screen and (max-width: 768px) {
+  .welcome {
+    font-size: 3rem; /* Smaller font size for welcome text */
+  }
+
+  .welcome button {
+    padding: 15px 50px; /* Adjust button size */
+    font-size: 1rem; /* Reduce font size for button */
+  }
+
+  .navbar ul {
+    flex-direction: column; /* Stack navbar items */
+    gap: 1rem; /* Add spacing between items */
+  }
+
+  .navbar ul li {
+    text-align: center; /* Center-align navbar items */
+  }
+
+  .banner {
+    flex-direction: column;
+  }
+
+  .left-container,
+  .right-container {
+    flex: none;
+    width: 100%;
+  }
+
+  .overlay-content h3 {
+    font-size: 3rem; /* Adjust text size for smaller screens */
+  }
+
+  .overlay-content p {
+    font-size: 1rem; /* Reduce paragraph text size */
+  }
+
+  .kart-content h2,
+  .kart-content p {
+    font-size: 1.5rem; /* Ensure text remains readable */
+    text-align: center; /* Center-align for better readability */
+  }
+
+  .kart-content {
+    left: 50%; /* Adjust position for mobile */
+    transform: translate(-50%, -50%);
+    text-align: center; /* Center-align content */
+  }
+
+  .foods {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .food img {
+    width: 100%; /* Ensure images fit within container */
+  }
+
+  .food {
+    flex: none;
+    width: 100%;
+  }
+
+  .food-heading {
+    font-size: 1.5rem; /* Adjust food heading size */
+  }
+
+  .food-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

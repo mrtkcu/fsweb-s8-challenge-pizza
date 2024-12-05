@@ -4,7 +4,7 @@ import Header from "./Header";
 import { useLocation } from "react-router-dom";
 import "../styles/SuccessPage.css";
 
-function SuccessPage(props) {
+function SuccessPage() {
   // Safely access payload
   const location = useLocation();
   const { payload } = location.state || {};

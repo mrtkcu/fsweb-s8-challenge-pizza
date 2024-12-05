@@ -257,6 +257,21 @@ label {
 /* Media Queries for Mobile Responsiveness */
 
 @media (max-width: 768px) {
+  .form-banner img {
+    position: relative;
+    top: 0;
+    left: 10px; /* Slightly to the left for better alignment */
+    width: 90%; /* Adjusts size for medium screens */
+    margin: 0 auto; /* Centers the image */
+  }
+
+  /* Decrease Size of Quantity Buttons */
+  .add-subtract {
+    width: 30px;
+    height: 30px; /* Smaller size for quantity buttons */
+    margin: 1rem;
+  }
+
   .order-pizza {
     width: 80%;
     font-size: 1rem;
@@ -282,11 +297,17 @@ label {
   .order-note-section .order-note-input {
     font-size: 1.1rem;
   }
+  /* Decrease Size of Order Note Text Area */
+  .order-note-section .order-note-input {
+    width: 90%; /* Less width for mobile */
+    font-size: 1rem;
+    height: 80px; /* Reduced height */
+    margin: 0 auto; /* Center the text area */
+  }
 
   .give-order-container {
     width: 90%;
     margin: 0 auto;
-    padding: 1.5rem;
   }
 
   .give-order-container p {
@@ -294,7 +315,8 @@ label {
   }
 
   .give-order-container button {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    width: 50%;
   }
 }
 

@@ -77,7 +77,9 @@ function HomePage() {
                 <h3>Özel</h3>
                 <h3>Lezzetus</h3>
                 <p>Position: Absolute Acı Burger</p>
-                <button className="cta-button">SİPARİŞ VER</button>
+                <button onClick={handleButtonClick} className="cta-button">
+                  SİPARİŞ VER
+                </button>
               </div>
             </div>
           </div>
@@ -90,7 +92,9 @@ function HomePage() {
               <div className="kart-content">
                 <h2>Hackathlon</h2>
                 <h2>Burger Menü</h2>
-                <button className="cta-button">SİPARİŞ VER</button>
+                <button onClick={handleButtonClick} className="cta-button">
+                  SİPARİŞ VER
+                </button>
               </div>
             </div>
             <div className="kart kart-3">
@@ -103,7 +107,9 @@ function HomePage() {
                   <span className="red">Çooooook</span> hızlı
                 </p>
                 <p className="black">npm gibi kurye</p>
-                <button className="cta-button">SİPARİŞ VER</button>
+                <button onClick={handleButtonClick} className="cta-button">
+                  SİPARİŞ VER
+                </button>
               </div>
             </div>
           </div>
