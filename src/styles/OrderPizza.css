@@ -23,10 +23,12 @@ fieldset {
 
 /* FORMUN HEADER KISMI */
 .form-banner {
+  margin: 0 auto;
   margin-top: -8rem;
-  z-index: 0;
-  margin-bottom: 3rem;
-  text-align: center;
+}
+
+.form-banner img {
+  width: 100%;
 }
 
 .navlink-container {
@@ -187,7 +189,7 @@ label {
 /* İSİM SOYİSİM İNPUT ALANI */
 .name-input-section input[type="text"] {
   padding: 0.7rem;
-  width: 50%;
+  width: 100%;
   margin-top: 1rem;
   font-size: 1.2rem;
   border-radius: 0.5rem;
@@ -214,14 +216,26 @@ label {
   justify-content: space-between;
 }
 
+.quantity-button-container {
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+.quantity-button-container p {
+  margin: 1rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 .add-subtract {
-  width: 50px;
   height: 50px;
-  margin: 1.5rem;
-  border-radius: 0.2rem;
-  border: none;
+  width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #fdc913;
-  cursor: pointer;
+  border: none;
 }
 
 .give-order-container {
@@ -257,15 +271,11 @@ label {
 /* Media Queries for Mobile Responsiveness */
 
 @media (max-width: 768px) {
-  .form-banner img {
-    position: relative;
-    top: 0;
-    left: 10px; /* Slightly to the left for better alignment */
-    width: 90%; /* Adjusts size for medium screens */
-    margin: 0 auto; /* Centers the image */
+  /* Decrease Size of Quantity Buttons */
+  .form-banner {
+    margin-top: -3rem;
   }
 
-  /* Decrease Size of Quantity Buttons */
   .add-subtract {
     width: 30px;
     height: 30px; /* Smaller size for quantity buttons */
@@ -275,6 +285,7 @@ label {
   .order-pizza {
     width: 80%;
     font-size: 1rem;
+    margin: 0 auto;
   }
 
   .pizza-size-and-dough-section {
@@ -290,16 +301,16 @@ label {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .name-input-section input[type="text"] {
-    width: 80%;
-  }
-
   .order-note-section .order-note-input {
     font-size: 1.1rem;
   }
+
+  .give-order-section {
+    display: flex;
+    flex-direction: column;
+  }
   /* Decrease Size of Order Note Text Area */
   .order-note-section .order-note-input {
-    width: 90%; /* Less width for mobile */
     font-size: 1rem;
     height: 80px; /* Reduced height */
     margin: 0 auto; /* Center the text area */
@@ -320,10 +331,9 @@ label {
   }
 }
 
-@media (max-width: 480px) {
-  .order-pizza {
-    width: 95%;
-    font-size: 0.9rem;
+@media (max-width: 1570px) {
+  .form-banner {
+    margin-top: -7rem;
   }
 
   .pizza-size-and-dough-section {
@@ -340,12 +350,14 @@ label {
     gap: 1.5rem;
   }
 
-  .name-input-section input[type="text"] {
-    width: 90%;
-  }
-
   .order-note-section .order-note-input {
     font-size: 1rem;
+  }
+
+  .give-order-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
   }
 
   .give-order-container {
@@ -353,8 +365,12 @@ label {
     padding: 1rem;
   }
 
+  .give-order-container h3 {
+    font-size: 2rem;
+  }
+
   .give-order-container p {
-    gap: 3rem;
+    font-size: 1.5rem;
   }
 
   .give-order-container button {

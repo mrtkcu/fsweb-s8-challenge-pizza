@@ -236,7 +236,7 @@ function OrderPizza() {
             >
               -
             </button>
-            {quantity}
+            <p>{quantity}</p>
             <button
               type="button"
               className="add-subtract"
