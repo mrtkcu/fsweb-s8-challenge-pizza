@@ -19,25 +19,25 @@ function SuccessPage() {
           <h4 className="order-name">Position Absolute Acı Pizza</h4>
           <div className="order-info">
             <p>
-              Boyut: <span className="bold">{payload.boyut}</span>
+              Boyut: <span className="bold">{payload.size}</span>
             </p>
             <p>
-              Hamur: <span className="bold">{payload.hamur}</span>
+              Hamur: <span className="bold">{payload.dough}</span>
             </p>
             <p>
               Ek Malzemeler:{" "}
-              <span className="bold">{payload.malzemeler.join(", ")}</span>
+              <span className="bold">{payload.ingredients.join(", ")}</span>
             </p>
           </div>
           <div className="order-total">
             <h4>Sipariş Toplamı</h4>
             <div className="order-group">
               <p>Seçimler</p>
-              <p className="bold">{5 * payload.malzemeler.length}₺</p>
+              <p className="bold">{5 * payload.ingredients.length}₺</p>
             </div>
             <div className="order-group">
               <p>Toplam&nbsp;&nbsp;</p>
-              <p className="bold">{payload.toplam}₺</p>
+              <p className="bold">{payload.totalPrice}₺</p>
             </div>
           </div>
         </div>

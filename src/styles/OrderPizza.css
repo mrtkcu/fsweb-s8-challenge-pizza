@@ -12,6 +12,12 @@ fieldset {
   font-weight: 600;
 }
 
+.error-message {
+  color: #ce2829;
+  font-size: 1.5rem;
+  margin: 2rem 0;
+}
+
 .order-pizza {
   font-family: "Barlow";
   width: 33%;

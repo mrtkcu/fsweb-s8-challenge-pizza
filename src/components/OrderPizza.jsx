@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import "../styles/OrderPizza.css";
 import { useHistory } from "react-router-dom";
@@ -6,51 +7,49 @@ import formBanner from "../assets/form-banner.png";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function OrderPizza() {
-  const [size, setSize] = useState("");
-  const [dough, setDough] = useState("");
-  const [ingredients, setIngredients] = useState([]);
-  const [quantity, setQuantity] = useState(1);
-  const [name, setName] = useState("");
-  const [note, setNote] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    defaultValues: {
+      size: "",
+      dough: "",
+      ingredients: [],
+      quantity: 1,
+      name: "",
+      note: "",
+    },
+  });
+
+  let history = useHistory();
+
+  // Watching form values to dynamically calculate extraCost and totalPrice
+  const ingredients = watch("ingredients", []);
+  const quantity = watch("quantity", 1);
 
   const basePrice = 85.5;
   const extraCost = ingredients.length * 5;
   const totalPrice = (basePrice + extraCost) * quantity;
 
-  let history = useHistory();
+  const handleIngredientChange = (ingredient, selectedIngredients) => {
+    const updatedIngredients = selectedIngredients.includes(ingredient)
+      ? selectedIngredients.filter((item) => item !== ingredient)
+      : [...selectedIngredients, ingredient];
 
-  const isFormValid =
-    size &&
-    dough &&
-    name.length >= 3 &&
-    ingredients.length >= 4 &&
-    ingredients.length <= 10;
-
-  const handleIngredientChange = (ingredient) => {
-    setIngredients((prev) =>
-      prev.includes(ingredient)
-        ? prev.filter((item) => item !== ingredient)
-        : [...prev, ingredient]
-    );
+    if (updatedIngredients.length <= 10) {
+      setValue("ingredients", updatedIngredients);
+    }
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (!isFormValid) {
-      setErrorMessage("Lütfen tüm gerekli alanları doğru şekilde doldurun!");
-      return;
-    }
-
+  const onSubmit = async (data) => {
     const payload = {
-      isim: name,
-      boyut: size,
-      hamur: dough,
-      malzemeler: ingredients,
-      özel: note,
-      miktar: quantity,
-      toplam: totalPrice,
+      ...data,
+      extraCost,
+      totalPrice,
     };
 
     try {
@@ -97,53 +96,34 @@ function OrderPizza() {
       </header>
       <form
         className="pizza-form"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         aria-labelledby="pizza-header-title"
         aria-describedby="pizza-description"
       >
-        {errorMessage && (
-          <div className="error-message" role="alert">
-            {errorMessage}
-          </div>
-        )}
         <section className="pizza-size-and-dough-section">
           <fieldset className="radio-container">
             <legend>
               Boyut Seç <span className="required">*</span>
             </legend>
             <div className="radio-group-container">
-              <div className="radio-align">
-                <input
-                  type="radio"
-                  name="pizza-size"
-                  id="small"
-                  value="S"
-                  onChange={(e) => setSize(e.target.value)}
-                />
-                <label htmlFor="small">S</label>
-              </div>
-              <div className="radio-align">
-                <input
-                  type="radio"
-                  name="pizza-size"
-                  id="medium"
-                  value="M"
-                  onChange={(e) => setSize(e.target.value)}
-                />
-                <label htmlFor="medium">M</label>
-              </div>
-              <div className="radio-align">
-                <input
-                  type="radio"
-                  name="pizza-size"
-                  id="large"
-                  value="L"
-                  onChange={(e) => setSize(e.target.value)}
-                />
-                <label htmlFor="large">L</label>
-              </div>
+              {["S", "M", "L"].map((size) => (
+                <div className="radio-align" key={size}>
+                  <input
+                    type="radio"
+                    name="pizza-size"
+                    id={size}
+                    value={size}
+                    {...register("size", { required: "Boyut Seçmelisiniz." })}
+                  />
+                  <label htmlFor={size}>{size}</label>
+                </div>
+              ))}
             </div>
+            {errors.size && (
+              <p className="error-message">{errors.size.message}</p>
+            )}
           </fieldset>
+
           <fieldset>
             <legend>
               Hamur Seç <span className="required">*</span>
@@ -151,8 +131,8 @@ function OrderPizza() {
             <select
               name="dough"
               id="choose-dough"
-              onChange={(e) => setDough(e.target.value)}
-              required
+              className="pizza-dough-select"
+              {...register("dough", { required: "Hamur seçmelisiniz!" })}
               aria-required="true"
             >
               <option value="">&mdash; Hamur Kalinligi Seç &mdash;</option>
@@ -161,6 +141,9 @@ function OrderPizza() {
               <option value="Orta">Orta</option>
               <option value="Kalın">Kalin</option>
             </select>
+            {errors.dough && (
+              <p className="error-message">{errors.dough.message}</p>
+            )}
           </fieldset>
         </section>
         <section className="ingredients-section">
@@ -168,38 +151,54 @@ function OrderPizza() {
             <legend>
               Ek Malzemeler (En az 4, en fazla 10 malzeme seçebilirsiniz.)
             </legend>
-            <div className="checkbox-container">
-              {[
-                "Pepperoni",
-                "Domates",
-                "Biber",
-                "Sosis",
-                "Misir",
-                "Sucuk",
-                "Kanada Jambonu",
-                "Zeytin",
-                "Ananas",
-                "Tavuk Izgara",
-                "Jalepeno",
-                "Kabak",
-                "Soğan",
-                "Sarımsak",
-              ].map((ingredient) => (
-                <div key={ingredient}>
-                  <input
-                    type="checkbox"
-                    value={ingredient}
-                    id={ingredient}
-                    onChange={() => handleIngredientChange(ingredient)}
-                    disabled={
-                      ingredients.length >= 10 &&
-                      !ingredients.includes(ingredient)
-                    }
-                  />
-                  <label htmlFor={ingredient}>{ingredient}</label>
+            <Controller
+              name="ingredients"
+              control={control}
+              rules={{
+                validate: (value) =>
+                  value.length >= 4 || "En az 4 malzeme seçmelisiniz!",
+              }}
+              render={({ field }) => (
+                <div className="checkbox-container">
+                  {[
+                    "Pepperoni",
+                    "Domates",
+                    "Biber",
+                    "Sosis",
+                    "Misir",
+                    "Sucuk",
+                    "Kanada Jambonu",
+                    "Zeytin",
+                    "Ananas",
+                    "Tavuk Izgara",
+                    "Jalepeno",
+                    "Kabak",
+                    "Soğan",
+                    "Sarımsak",
+                  ].map((ingredient) => (
+                    <div key={ingredient}>
+                      <input
+                        type="checkbox"
+                        value={ingredient}
+                        id={ingredient}
+                        onChange={() =>
+                          handleIngredientChange(ingredient, field.value)
+                        }
+                        checked={field.value.includes(ingredient)}
+                        disabled={
+                          field.value.length >= 10 &&
+                          !field.value.includes(ingredient)
+                        }
+                      />
+                      <label htmlFor={ingredient}>{ingredient}</label>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              )}
+            />
+            {errors.ingredients && (
+              <p className="error-message">{errors.ingredients.message}</p>
+            )}
           </fieldset>
         </section>
         <section className="name-input-section">
@@ -209,56 +208,64 @@ function OrderPizza() {
           <input
             type="text"
             id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            className="pizza-name-input"
             placeholder="Adınızı Giriniz..."
-            required
-            minLength={3}
+            {...register("name", {
+              required: "İsim girilmesi zorunludur!",
+              minLength: {
+                value: 3,
+                message: "İsim en az 3 karakter olmalıdır!",
+              },
+            })}
           />
+          {errors.name && (
+            <p className="error-message">{errors.name.message}</p>
+          )}
         </section>
         <section className="order-note-section">
           <label htmlFor="order-note">Sipariş Notu</label>
           <textarea
             className="order-note-input"
             id="order-note"
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
+            {...register("note")}
             placeholder="Siparişine eklemek istediğin bir not var mı?"
           />
         </section>
         <section className="give-order-section">
-          <div className="quantity-button-container">
-            <button
-              type="button"
-              className="add-subtract"
-              onClick={() => setQuantity((prev) => Math.max(prev - 1, 1))}
-              aria-label="Azalt"
-            >
-              -
-            </button>
-            <p>{quantity}</p>
-            <button
-              type="button"
-              className="add-subtract"
-              onClick={() => setQuantity((prev) => prev + 1)}
-              aria-label="Arttır"
-            >
-              +
-            </button>
-          </div>
+          <Controller
+            name="quantity"
+            control={control}
+            render={({ field }) => (
+              <div className="quantity-button-container">
+                <button
+                  type="button"
+                  className="add-subtract"
+                  onClick={() => field.onChange(Math.max(field.value - 1, 1))}
+                  aria-label="Azalt"
+                >
+                  -
+                </button>
+                <p>{field.value}</p>
+                <button
+                  type="button"
+                  className="add-subtract"
+                  onClick={() => field.onChange(field.value + 1)}
+                  aria-label="Arttır"
+                >
+                  +
+                </button>
+              </div>
+            )}
+          />
           <div className="give-order-container">
             <h3>Sipariş Toplamı</h3>
             <p className="bold">
-              <span>Seçimler</span> <span>{extraCost}₺</span>
+              <span>Seçimler</span> <span>{extraCost.toFixed(2)}₺</span>
             </p>
             <p className="red bold">
-              <span>Toplam</span> <span>{totalPrice}₺</span>
+              <span>Toplam</span> <span>{totalPrice.toFixed(2)}₺</span>
             </p>
-            <button
-              type="submit"
-              disabled={!isFormValid}
-              aria-disabled={!isFormValid}
-            >
+            <button type="submit" className="order-submit-button">
               SİPARİŞ VER
             </button>
           </div>
